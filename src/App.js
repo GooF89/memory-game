@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import CardsGrid from './containers/CardsGrid'
+import VictoryMessage from './components/VictoryMessage'
+import { getNewBoard, getSrcById } from './utils'
+import { WIDTH, HEIGHT, DELAY, SCORE_BONUS, GRID_WIDTH, GRID_HEIGHT, MARGIN } from './utils/constans'
+import './App.css'
 
-function App() {
+const App = () => {
+  const [score, setScore] = useState(0)
+  const [board, setBoard] = useState(getNewBoard())
+
+  const initiateBoard = () => {
+    setBoard(getNewBoard())
+    setScore(0)
+  }
+
+  const onMatch = () => setScore(score + SCORE_BONUS)
+  const showVictoryMessage = score === WIDTH * HEIGHT * SCORE_BONUS / 2
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Score: { score }</h1>
+      <CardsGrid
+        board={ board }
+        getSrcById={ getSrcById }
+        onMatch={ onMatch }
+        delay={ DELAY }
+        cardsInRow={ WIDTH }
+        cardsInColumn={ HEIGHT }
+        width={ GRID_WIDTH }
+        height={ GRID_HEIGHT }
+        cardMargin={ MARGIN }
+      />
+      <VictoryMessage
+        show={ showVictoryMessage }
+        text={ 'Victory!' }
+        onClick={ initiateBoard }
+      />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
