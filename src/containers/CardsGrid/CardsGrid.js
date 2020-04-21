@@ -8,8 +8,6 @@ const initiateOpenStates = length => new Array(length).fill(openStateEnum.CLOSED
 const CardGrid = ({ board, getSrcById, onMatch, delay, cardsInRow, cardsInColumn, width, height, cardMargin }) => {
   const [openStates, setOpenStates] = useState(initiateOpenStates(board.length))
 
-  useEffect(() => setOpenStates(initiateOpenStates(board.length)), [board])
-
   const tmpOpened = openStates.reduce((acc, openState, i) => {
     if (openState === openStateEnum.TMP_OPENED) {
       acc.push(i)
@@ -17,20 +15,23 @@ const CardGrid = ({ board, getSrcById, onMatch, delay, cardsInRow, cardsInColumn
     return acc
   },[])
 
-  const defineStateOfTmpOpened = (idx1, idx2) => {
-    const newOpenState = board[idx1] === board[idx2]? openStateEnum.OPENED : openStateEnum.CLOSED
-    setOpenStates(openStates.map((openState, i) => [idx1, idx2].includes(i) ? newOpenState : openState))
+  useEffect(() => setOpenStates(initiateOpenStates(board.length)), [board])
+  useEffect(() => {
+    if (tmpOpened.length === 2) {
+      setTimeout(() => defineStateOfTmpOpened(), delay)
+    }
+  })
+
+  const defineStateOfTmpOpened = () => {
+    const newOpenState = board[tmpOpened[0]] === board[tmpOpened[1]] ? openStateEnum.OPENED : openStateEnum.CLOSED
+    setOpenStates(openStates.map((openState, i) => tmpOpened.includes(i) ? newOpenState : openState))
     if (newOpenState === openStateEnum.OPENED) {
       onMatch()
-    }
-  }
+    }  }
 
   const onCardClick = index => {
     if (openStates[index] || tmpOpened.length === 2) {
       return
-    }
-    if (tmpOpened.length) {
-      setTimeout(() => defineStateOfTmpOpened(tmpOpened[0], index), delay)
     }
     setOpenStates(openStates.map((openState, i) => i === index ? openStateEnum.TMP_OPENED : openState))
   }

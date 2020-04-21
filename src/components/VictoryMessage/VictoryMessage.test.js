@@ -35,7 +35,6 @@ describe('Card', () => {
     const wrapper = shallow(<VictoryMessage show text={ testText } />)
     const mockFunc = jest.fn()
     wrapper.setProps({ onClick: mockFunc })
-    wrapper.update()
 
     it('should call mockFunc on click', () => {
       const card = wrapper.find('.popup')

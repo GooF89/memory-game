@@ -62,7 +62,6 @@ describe('Card', () => {
     const wrapper = shallow(<Card { ...props } />)
     const mockFunc = jest.fn()
     wrapper.setProps({ onClick: mockFunc })
-    wrapper.update()
 
     it('should call mockFunc on click', () => {
       const card = wrapper.find('.card')

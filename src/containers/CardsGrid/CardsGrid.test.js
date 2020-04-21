@@ -8,7 +8,14 @@ import { WIDTH, HEIGHT, DELAY } from '../../utils/constans'
 
 Enzyme.configure({ adapter: new Adapter() })
 
+const consoleError = console.error
+
 jest.useFakeTimers()
+jest.spyOn(console, 'error').mockImplementation((...args) => {
+  if (!args[0].includes('Warning: An update to %s inside a test was not wrapped in act')) {
+    consoleError(...args)
+  }
+})
 
 const props = {
   board: getNewBoard(),
@@ -103,9 +110,7 @@ describe('CardsGrid', () => {
       it('should open matched cards after delay', () => {
         const cards = wrapper.find(Card)
         cards.at(0).simulate('click')
-        wrapper.update()
         cards.at(indexOfMatch).simulate('click')
-        wrapper.update()
         jest.runAllTimers()
         wrapper.update()
         expect(wrapper.find(Card).at(0).props().openState).toBe(openStateEnum.OPENED)
