@@ -3,11 +3,11 @@ import CardsGrid from './containers/CardsGrid'
 import VictoryMessage from './components/VictoryMessage'
 import { getNewBoard, getSrcById } from './utils'
 import { WIDTH, HEIGHT, DELAY, SCORE_BONUS, GRID_WIDTH, GRID_HEIGHT, MARGIN } from './utils/constans'
-import './App.css'
+import './App.scss'
 
 const App = () => {
   const [score, setScore] = useState(0)
-  const [board, setBoard] = useState(getNewBoard())
+  const [board, setBoard] = useState(getNewBoard(WIDTH, HEIGHT))
 
   const initiateBoard = () => {
     setBoard(getNewBoard())
@@ -19,7 +19,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>Score: { score }</h1>
+      <p>Score: { score }</p>
       <CardsGrid
         board={ board }
         getSrcById={ getSrcById }

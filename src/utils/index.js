@@ -1,16 +1,17 @@
-import { WIDTH, HEIGHT, NUMBER_OF_INDEXES, MIX_FACTOR } from './constans'
+import { NUMBER_OF_INDEXES, MIX_FACTOR } from './constans'
 
 const getArrayOfAllIndexes = () => {
   const allIndexes = []
   let i = 0
+  // eslint-disable-next-line no-empty
   while (allIndexes.push(i++) < NUMBER_OF_INDEXES) {}
   return allIndexes
 }
 
-const getRandomIndexes = () => {
+const getRandomIndexes = (width, height) => {
   const randomIndexes = []
   const allIndexes = getArrayOfAllIndexes()
-  let indexesToGet = HEIGHT * WIDTH / 2
+  let indexesToGet = width * height / 2
   while (indexesToGet--) {
     const randomIndex = allIndexes.splice(Math.floor(Math.random() * allIndexes.length), 1)[0]
     randomIndexes.push(randomIndex, randomIndex)
@@ -26,9 +27,9 @@ const randomSwap = arr => {
   arr[randomIndex2] = tmp
 }
 
-export const getNewBoard = () => {
-  const newBoard = getRandomIndexes()
-  let numberOfMixes = HEIGHT * WIDTH * MIX_FACTOR
+export const getNewBoard = (width, height) => {
+  const newBoard = getRandomIndexes(width, height)
+  let numberOfMixes = width * height * MIX_FACTOR
   while (numberOfMixes--) {
     randomSwap(newBoard)
   }

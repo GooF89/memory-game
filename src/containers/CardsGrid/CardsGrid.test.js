@@ -3,11 +3,12 @@ import Enzyme, { shallow, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import CardsGrid from './'
 import Card, { openStateEnum } from '../../components/Card'
-import { getSrcById, getNewBoard } from '../../utils'
-import { WIDTH, HEIGHT, DELAY } from '../../utils/constans'
+import { getSrcById, getNewBoard } from '../../tests/utils'
+import { WIDTH, HEIGHT, DELAY } from '../../tests/utils/constans'
 
 Enzyme.configure({ adapter: new Adapter() })
 
+// eslint-disable-next-line no-console
 const consoleError = console.error
 
 jest.useFakeTimers()
@@ -18,7 +19,7 @@ jest.spyOn(console, 'error').mockImplementation((...args) => {
 })
 
 const props = {
-  board: getNewBoard(),
+  board: getNewBoard(WIDTH, HEIGHT),
   getSrcById,
   delay: DELAY,
   cardsInRow: WIDTH,
@@ -42,7 +43,7 @@ describe('CardsGrid', () => {
     })
 
     describe('With props', () => {
-      const wrapper = shallow(<CardsGrid {...props} />)
+      const wrapper = shallow(<CardsGrid { ...props } />)
       const cards = wrapper.find(Card)
 
       it('should not fails to render', () => {
@@ -62,7 +63,7 @@ describe('CardsGrid', () => {
   })
 
   describe('User Interactions', () => {
-    const wrapper = mount(<CardsGrid {...props} />)
+    const wrapper = mount(<CardsGrid { ...props } />)
 
     afterAll(() => {
       wrapper.unmount()
@@ -75,7 +76,9 @@ describe('CardsGrid', () => {
     const firstCard = cards.at(0)
     const { src: firstSrc } = firstCard.props()
 
-    let indexOfMatch, indexOfMismatch
+    let indexOfMatch
+    let indexOfMismatch
+
     cards.forEach(card => {
       const { src, index } = card.props()
       if (firstSrc === src) {

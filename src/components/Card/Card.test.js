@@ -2,13 +2,13 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import Card, { openStateEnum } from './'
-import { getSrcById } from '../../utils'
+import { getSrcById } from '../../tests/utils'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 const props = {
   src: getSrcById(0),
-  index:3,
+  index: 3,
   openState: openStateEnum.OPENED,
   style: { width: 100, height: 100 }
 }
@@ -38,7 +38,7 @@ describe('Card', () => {
     })
 
     describe('With props', () => {
-      const wrapper = shallow(<Card {...props} />)
+      const wrapper = shallow(<Card { ...props } />)
       const card = wrapper.find('.card')
 
       it('should not fails to render', () => {

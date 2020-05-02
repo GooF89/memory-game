@@ -1,0 +1,30 @@
+.App {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  p {
+    font-size: 100px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .App {
+
+    p {
+      font-size: 40px;
+    }
+  }
+}
+
+
+
+@media (max-width: 830px) {
+  .App {
+
+    p {
+      font-size: 20px;
+    }
+  }
+}
+

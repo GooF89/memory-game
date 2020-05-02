@@ -13,7 +13,7 @@ const CardGrid = ({ board, getSrcById, onMatch, delay, cardsInRow, cardsInColumn
       acc.push(i)
     }
     return acc
-  },[])
+  }, [])
 
   useEffect(() => setOpenStates(initiateOpenStates(board.length)), [board])
   useEffect(() => {
@@ -27,7 +27,8 @@ const CardGrid = ({ board, getSrcById, onMatch, delay, cardsInRow, cardsInColumn
     setOpenStates(openStates.map((openState, i) => tmpOpened.includes(i) ? newOpenState : openState))
     if (newOpenState === openStateEnum.OPENED) {
       onMatch()
-    }  }
+    }
+  }
 
   const onCardClick = index => {
     if (openStates[index] || tmpOpened.length === 2) {
@@ -38,15 +39,15 @@ const CardGrid = ({ board, getSrcById, onMatch, delay, cardsInRow, cardsInColumn
 
   const getCardStyle = () => {
     const margin = cardMargin
-    const cardWidth = width / cardsInRow - margin * 2
-    const cardHeight = height / cardsInColumn - margin * 2
-    return { width: cardWidth, height: cardHeight, margin }
+    const cardWidth = 100 / cardsInRow - margin + '%'
+    const cardHeight = 100 / cardsInColumn - margin + '%'
+    return { width: cardWidth, height: cardHeight }
   }
 
   const cardStyle = getCardStyle()
 
   return (
-    <div className='card-grid' style={{ width, height }}>
+    <div className='card-grid' style={ { width: width + 'vw', height: height + 'vh' } } >
       { board.map((id, i) =>
         <Card
           src={ getSrcById(id) }

@@ -5,10 +5,10 @@ import { openStateEnum } from './enums'
 import './Card.scss'
 
 const Card = ({ src, index, openState, style, onClick }) =>
-  <div className={ classNames('card', { 'opened': !!openState, 'transparent': openState === openStateEnum.OPENED }) }
-       style={ style }
-       onClick={ () => onClick(index) }>
-      <img src={ src } className='card-image' alt={'card'} />
+  <div className={ classNames('card', { opened: !!openState, transparent: openState === openStateEnum.OPENED }) }
+    style={ style }
+    onClick={ () => onClick(index) }>
+    <img src={ src } className='card-image' alt={ 'card' } />
   </div>
 
 Card.defaultProps = {
